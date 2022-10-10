@@ -1,0 +1,15 @@
+version: '3.9'
+
+services: 
+  mongodb:
+    image: mongo:5.0
+    ports:
+      - 27017:27017
+    volumes:
+      - powerlog_db:/data/db
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=admin
+      - MONGODB_INITDB_ROOT_PASSWORD=admin
+  
+volumes:
+  powerlog_db:
