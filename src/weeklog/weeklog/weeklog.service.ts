@@ -13,6 +13,6 @@ export class WeeklogService {
   async createWeek(weekLogDto: WeekLogDTO) {
     const createdWeek = new this.weekLogModel(weekLogDto);
     await createdWeek.save();
-    console.log(createdWeek);
+    return createdWeek._id;
   }
 }

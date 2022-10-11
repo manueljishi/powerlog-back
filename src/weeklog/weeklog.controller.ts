@@ -1,20 +1,28 @@
 import { Body, Controller, Post } from '@nestjs/common';
+import { DaylogService } from './daylog/daylog.service';
 import { CreateWeekDto } from './dto/create.week.dto';
 import { WeekLogDTO } from './dto/weeklog.dto';
 import { WeeklogService } from './weeklog/weeklog.service';
 
 @Controller('weeklog')
 export class WeeklogController {
-  constructor(private weekLogService: WeeklogService) {}
+  constructor(
+    private weekLogService: WeeklogService,
+    private dayLogService: DaylogService,
+  ) {}
 
   @Post()
-  createWeek(@Body() createWeekDto: CreateWeekDto): void {
+  async createWeek(@Body() createWeekDto: CreateWeekDto) {
     const weekLog = new WeekLogDTO(
       createWeekDto.startDate,
       createWeekDto.endDate,
     );
-    this.weekLogService.createWeek(weekLog);
-
+    const weekId = await this.weekLogService.createWeek(weekLog);
+    console.log(weekId);
+    createWeekDto.dayLogs.forEach((e) => {
+      e.weekId = weekId;
+    });
+    await this.dayLogService.insertMany(createWeekDto.dayLogs);
     return;
   }
 }
