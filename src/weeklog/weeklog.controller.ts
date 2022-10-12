@@ -18,9 +18,11 @@ export class WeeklogController {
       createWeekDto.endDate,
     );
     const weekId = await this.weekLogService.createWeek(weekLog);
+    console.log(typeof weekId);
     console.log(weekId);
     createWeekDto.dayLogs.forEach((e) => {
       e.weekId = weekId;
+      console.log(e);
     });
     await this.dayLogService.insertMany(createWeekDto.dayLogs);
     return;

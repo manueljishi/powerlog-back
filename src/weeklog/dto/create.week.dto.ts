@@ -1,4 +1,4 @@
-import { ObjectID } from 'bson';
+import mongoose from 'mongoose';
 
 export class CreateWeekDto {
   startDate: Date;
@@ -7,7 +7,7 @@ export class CreateWeekDto {
 }
 
 export class DayLog {
-  weekId: ObjectID;
+  weekId: mongoose.Types.ObjectId;
   weekDay: string;
   day: Date;
   exercises: Exercise[];
