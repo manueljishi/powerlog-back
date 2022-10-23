@@ -13,6 +13,7 @@ export class WeeklogController {
 
   @Post()
   async createWeek(@Body() createWeekDto: CreateWeekDto) {
+    console.log(createWeekDto);
     const weekLog = new WeekLogDTO(
       createWeekDto.startDate,
       createWeekDto.endDate,
