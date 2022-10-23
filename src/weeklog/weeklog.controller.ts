@@ -13,14 +13,21 @@ export class WeeklogController {
 
   @Post()
   async createWeek(@Body() createWeekDto: CreateWeekDto) {
-    console.log(createWeekDto);
+    let wrongDate = new Date(0);
+    if (
+      createWeekDto.startDate > createWeekDto.endDate ||
+      createWeekDto.startDate == wrongDate ||
+      createWeekDto.endDate == wrongDate ||
+      createWeekDto.athleteName == null
+    ) {
+      return { message: 'Error creating data' };
+    }
+
     const weekLog = new WeekLogDTO(
       createWeekDto.startDate,
       createWeekDto.endDate,
     );
     const weekId = await this.weekLogService.createWeek(weekLog);
-    console.log(typeof weekId);
-    console.log(weekId);
     createWeekDto.dayLogs.forEach((e) => {
       e.weekId = weekId;
       console.log(e);
