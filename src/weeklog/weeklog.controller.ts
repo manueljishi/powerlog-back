@@ -1,4 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { DaylogService } from './daylog/daylog.service';
 import { CreateWeekDto } from './dto/create.week.dto';
 import { WeekLogDTO } from './dto/weeklog.dto';
@@ -20,7 +26,13 @@ export class WeeklogController {
       createWeekDto.endDate == wrongDate ||
       createWeekDto.athleteName == null
     ) {
-      return { message: 'Error creating data' };
+      return new HttpException(
+        {
+          status: HttpStatus.BAD_REQUEST,
+          error: 'Error creating data',
+        },
+        HttpStatus.BAD_REQUEST,
+      );
     }
 
     const weekLog = new WeekLogDTO(
