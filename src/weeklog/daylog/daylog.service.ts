@@ -14,4 +14,8 @@ export class DaylogService {
     console.log(intserted);
     return;
   }
+
+  async findByDate(date: Date) {
+    return await this.dayLogModel.find({ day: date });
+  }
 }

@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import { IConstraint } from '../schemas/daylog.schema';
 
 export class CreateWeekDto {
@@ -9,8 +8,6 @@ export class CreateWeekDto {
 }
 
 export class DayLog {
-  weekId: mongoose.Types.ObjectId;
-  weekDay: string;
   day: Date;
   exercises: Exercise[];
 }
@@ -18,6 +15,7 @@ export class DayLog {
 class Exercise {
   exercise_name: string;
   sets: number[];
+  reps: number[];
   constraints: IConstraint[];
   real_perceived_effort: number[];
   real_weight: number[];
