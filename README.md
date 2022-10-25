@@ -7,3 +7,5 @@
 - [ ] Reconstruir una semana para enviarla
 - [ ] Update de un dia 
 - [ ] Variables de entorno
+- [ ] Filtrar los dias si vienen vacios
+- [ ] Encontrar dia segun la fecha
