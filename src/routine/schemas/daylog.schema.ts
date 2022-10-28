@@ -5,10 +5,10 @@ import { WeekLog } from './weeklog.schema';
 export type DayLogDocument = DayLog & Document;
 
 export interface IConstraint {
-  rpe: string;
-  rir: string;
-  fixedWeight: string;
-  percentage: string;
+  rpe?: string;
+  rir?: string;
+  fixedWeight?: string;
+  percentage?: string;
 }
 
 class Exercise {

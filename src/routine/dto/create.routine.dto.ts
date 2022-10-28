@@ -1,6 +1,6 @@
 import { IConstraint } from '../schemas/daylog.schema';
 
-export class CreateWeekDto {
+export class CreateRoutineDto {
   startDate: Date;
   endDate: Date;
   dayLogs: DayLog[];

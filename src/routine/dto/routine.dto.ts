@@ -1,4 +1,4 @@
-export class WeekLogDTO {
+export class RoutineDto {
   startDate: Date;
   endDate: Date;
 
