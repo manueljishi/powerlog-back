@@ -1,15 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
-import { WeekLog } from './weeklog.schema';
+import { IConstraint } from '../dto/create.routine.dto';
 
 export type DayLogDocument = DayLog & Document;
-
-export interface IConstraint {
-  rpe?: string;
-  rir?: string;
-  fixedWeight?: string;
-  percentage?: string;
-}
 
 class Exercise {
   exercise_name: string;

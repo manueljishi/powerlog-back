@@ -1,5 +1,15 @@
 import { IsArray, IsDate, IsString } from 'class-validator';
-import { IConstraint } from '../schemas/daylog.schema';
+
+export class IConstraint {
+  @IsString()
+  rpe?: string;
+  @IsString()
+  rir?: string;
+  @IsString()
+  fixedWeight?: string;
+  @IsString()
+  percentage?: string;
+}
 
 export class CreateRoutineDto {
   @IsDate()
