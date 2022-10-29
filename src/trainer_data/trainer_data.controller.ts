@@ -7,9 +7,12 @@ export class TrainerDataController {
   constructor(private readonly trainerDataService: TrainerDataService) {}
   @Post()
   async createNewExercise(@Body() newExercise: NewExerciseDto) {
+    if (!newExercise.athleteName || !newExercise.exerciseName) {
+      return 'Missing required fields';
+    }
     return this.trainerDataService.createNewExercise(
       newExercise.athleteName,
-      newExercise.exercise_name,
+      newExercise.exerciseName,
     );
   }
 

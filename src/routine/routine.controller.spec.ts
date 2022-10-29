@@ -1,3 +1,4 @@
+import { HttpException, HttpStatus } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { DaylogService } from './daylog/daylog.service';
@@ -70,37 +71,50 @@ describe('RoutineController', () => {
     it('should skip days with empty startDate', async () => {
       let testRoutine2 = { ...testRoutine };
       testRoutine2.startDate = null;
-      jest.spyOn(dayService, 'insertMany').mockImplementation(() => {
-        return Promise.resolve(0);
-      });
-      expect(await controller.createWeek(testRoutine2)).toEqual(0);
+      try {
+        await controller.createWeek(testRoutine2);
+      } catch (e) {
+        expect(e).toBeInstanceOf(HttpException);
+        expect(e.getStatus()).toEqual(HttpStatus.BAD_REQUEST);
+        expect(e.getResponse()).toEqual('Missing required fields');
+      }
     });
 
     it('should skip days with empty endDate', async () => {
       let testRoutine2 = { ...testRoutine };
       testRoutine2.endDate = null;
-      jest.spyOn(dayService, 'insertMany').mockImplementation(() => {
-        return Promise.resolve(0);
-      });
-      expect(await controller.createWeek(testRoutine2)).toEqual(0);
+      try {
+        await controller.createWeek(testRoutine2);
+      } catch (e) {
+        expect(e).toBeInstanceOf(HttpException);
+        expect(e.getStatus()).toEqual(HttpStatus.BAD_REQUEST);
+        expect(e.getResponse()).toEqual('Missing required fields');
+      }
     });
 
     it('should skip days with empty athleteName', async () => {
       let testRoutine2 = { ...testRoutine };
       testRoutine2.athleteName = null;
-      jest.spyOn(dayService, 'insertMany').mockImplementation(() => {
-        return Promise.resolve(0);
-      });
-      expect(await controller.createWeek(testRoutine2)).toEqual(0);
+      try {
+        await controller.createWeek(testRoutine2);
+      } catch (e) {
+        expect(e).toBeInstanceOf(HttpException);
+        expect(e.getStatus()).toEqual(HttpStatus.BAD_REQUEST);
+        expect(e.getResponse()).toEqual('Missing required fields');
+      }
     });
 
     it('should skip weeks where startDate and endDate are not in order', async () => {
       let testRoutine2 = { ...testRoutine };
-      testRoutine2.endDate = new Date('2020-01-01');
-      jest.spyOn(dayService, 'insertMany').mockImplementation(() => {
-        return Promise.resolve(0);
-      });
-      expect(await controller.createWeek(testRoutine2)).toEqual(0);
+      testRoutine2.startDate = new Date('2021-01-07');
+      testRoutine2.endDate = new Date('2021-01-01');
+      try {
+        await controller.createWeek(testRoutine2);
+      } catch (e) {
+        expect(e).toBeInstanceOf(HttpException);
+        expect(e.getStatus()).toEqual(HttpStatus.BAD_REQUEST);
+        expect(e.getResponse()).toEqual('Start date must be before end date');
+      }
     });
   });
 });
