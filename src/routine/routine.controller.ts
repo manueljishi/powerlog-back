@@ -4,6 +4,8 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { DaylogService } from './daylog/daylog.service';
 import { CreateRoutineDto } from './dto/create.routine.dto';
@@ -33,6 +35,7 @@ export class RoutineController {
       const nonEmptyDayLogs = newRoutine.dayLogs.filter(
         (dayLog) => dayLog.exercises.length > 0,
       );
+      console.log(typeof newRoutine.startDate);
       return await this.dayLogService.insertMany(nonEmptyDayLogs);
     }
   }
