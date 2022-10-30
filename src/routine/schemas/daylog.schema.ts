@@ -20,6 +20,9 @@ export class DayLog {
 
   @Prop({ required: true })
   exercises: Exercise[];
+
+  @Prop({ required: true })
+  athleteName: string;
 }
 
 export const DayLogSchema = SchemaFactory.createForClass(DayLog);

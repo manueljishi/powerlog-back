@@ -1,6 +1,7 @@
-import { HttpException, HttpStatus } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
+import { ValidationError } from 'class-validator';
 import { DaylogService } from './daylog/daylog.service';
 import { CreateRoutineDto } from './dto/create.routine.dto';
 import { RoutineController } from './routine.controller';
@@ -16,10 +17,11 @@ describe('RoutineController', () => {
     dayLogs: [
       {
         day: new Date('2021-01-01'),
+        athleteName: 'test',
         exercises: [
           {
             exercise_name: 'test',
-            sets: [1, 2, 3],
+            sets: 3,
             reps: [1, 2, 3],
             constraints: [{ rpe: '8' }, { rpe: '8' }, { rpe: '8' }],
             real_perceived_effort: [],
@@ -74,9 +76,7 @@ describe('RoutineController', () => {
       try {
         await controller.createWeek(testRoutine2);
       } catch (e) {
-        expect(e).toBeInstanceOf(HttpException);
-        expect(e.getStatus()).toEqual(HttpStatus.BAD_REQUEST);
-        expect(e.getResponse()).toEqual('Missing required fields');
+        expect(e).toBeInstanceOf(Error);
       }
     });
 
@@ -86,21 +86,17 @@ describe('RoutineController', () => {
       try {
         await controller.createWeek(testRoutine2);
       } catch (e) {
-        expect(e).toBeInstanceOf(HttpException);
-        expect(e.getStatus()).toEqual(HttpStatus.BAD_REQUEST);
-        expect(e.getResponse()).toEqual('Missing required fields');
+        expect(e).toBeInstanceOf(Error);
       }
     });
 
     it('should skip days with empty athleteName', async () => {
       let testRoutine2 = { ...testRoutine };
-      testRoutine2.athleteName = null;
+      testRoutine2.dayLogs[0].athleteName = null;
       try {
         await controller.createWeek(testRoutine2);
       } catch (e) {
-        expect(e).toBeInstanceOf(HttpException);
-        expect(e.getStatus()).toEqual(HttpStatus.BAD_REQUEST);
-        expect(e.getResponse()).toEqual('Missing required fields');
+        expect(e).toBeInstanceOf(Error);
       }
     });
 

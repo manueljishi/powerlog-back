@@ -14,7 +14,7 @@ export class DaylogService {
     return intserted.length;
   }
 
-  async findByDate(date: Date) {
-    return await this.dayLogModel.find({ day: date });
+  async findByDate(date: Date, athleteName: string) {
+    return await this.dayLogModel.find({ day: date, athleteName });
   }
 }

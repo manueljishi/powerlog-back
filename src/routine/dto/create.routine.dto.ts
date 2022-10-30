@@ -1,4 +1,10 @@
-import { IsArray, IsDate, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsDate,
+  IsDateString,
+  IsNumber,
+  IsString,
+} from 'class-validator';
 
 export class IConstraint {
   @IsString()
@@ -12,9 +18,9 @@ export class IConstraint {
 }
 
 export class CreateRoutineDto {
-  @IsDate()
+  @IsDateString()
   startDate: Date;
-  @IsDate()
+  @IsDateString()
   endDate: Date;
   @IsArray()
   dayLogs: DayLog[];
@@ -23,17 +29,19 @@ export class CreateRoutineDto {
 }
 
 export class DayLog {
-  @IsDate()
+  @IsDateString()
   day: Date;
   @IsArray()
   exercises: Exercise[];
+  @IsString()
+  athleteName: string;
 }
 
 class Exercise {
   @IsString()
   exercise_name: string;
-  @IsArray()
-  sets: number[];
+  @IsNumber()
+  sets: number;
   @IsArray()
   reps: number[];
   @IsArray()
