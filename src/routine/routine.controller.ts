@@ -29,12 +29,19 @@ export class RoutineController {
     nonEmptyDayLogs.forEach((dayLog) => {
       dayLog.athleteName = newRoutine.athleteName;
     });
-    console.log(nonEmptyDayLogs);
     return await this.dayLogService.insertMany(nonEmptyDayLogs);
   }
 
   @Post('/date')
   async findByDate(@Body() date: GetDayDto) {
-    return await this.dayLogService.findByDate(date.date, date.athleteName);
+    let resp = await this.dayLogService.findByDate(date.date, date.athleteName);
+    if (!resp) {
+      throw new HttpException(
+        'No day found for this date',
+        HttpStatus.NOT_FOUND,
+      );
+    } else {
+      return resp;
+    }
   }
 }

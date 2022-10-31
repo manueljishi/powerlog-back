@@ -113,4 +113,36 @@ describe('RoutineController', () => {
       }
     });
   });
+
+  describe('getting days based on date', () => {
+    it('should return a day if exists', async () => {
+      jest.spyOn(dayService, 'findByDate').mockImplementation(() => {
+        return Promise.resolve(testRoutine.dayLogs[0]);
+      });
+      let dataParams = {
+        date: testRoutine.dayLogs[0].day,
+        athleteName: testRoutine.dayLogs[0].athleteName,
+      };
+      expect(await controller.findByDate(dataParams)).toEqual(
+        testRoutine.dayLogs[0],
+      );
+    });
+
+    it('should return an exception if day was not found', async () => {
+      jest.spyOn(dayService, 'findByDate').mockImplementation(() => {
+        return Promise.resolve(null);
+      });
+      let dataParams = {
+        date: new Date('2021-01-04'),
+        athleteName: testRoutine.dayLogs[0].athleteName,
+      };
+      try {
+        await controller.findByDate(dataParams);
+      } catch (e) {
+        expect(e).toBeInstanceOf(HttpException);
+        expect(e.getStatus()).toEqual(HttpStatus.NOT_FOUND);
+        expect(e.getResponse()).toEqual('No day found for this date');
+      }
+    });
+  });
 });
