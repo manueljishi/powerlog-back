@@ -4,8 +4,6 @@ import {
   HttpException,
   HttpStatus,
   Post,
-  UsePipes,
-  ValidationPipe,
 } from '@nestjs/common';
 import { DaylogService } from './daylog/daylog.service';
 import { CreateRoutineDto } from './dto/create.routine.dto';
@@ -29,6 +27,9 @@ export class RoutineController {
     nonEmptyDayLogs.forEach((dayLog) => {
       dayLog.athleteName = newRoutine.athleteName;
     });
+    if (nonEmptyDayLogs.length === 0) {
+      throw new HttpException('No days to create', HttpStatus.BAD_REQUEST);
+    }
     return await this.dayLogService.insertMany(nonEmptyDayLogs);
   }
 

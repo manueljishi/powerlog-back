@@ -64,10 +64,12 @@ describe('RoutineController', () => {
     it('should skip days with empty exercises', async () => {
       let testRoutine2 = { ...testRoutine };
       testRoutine2.dayLogs[0].exercises = [];
-      jest.spyOn(dayService, 'insertMany').mockImplementation(() => {
-        return Promise.resolve(0);
-      });
-      expect(await controller.createWeek(testRoutine2)).toEqual(0);
+      try {
+        await controller.createWeek(testRoutine2);
+      } catch (e) {
+        expect(e).toBeInstanceOf(HttpException);
+        expect(e.getStatus()).toEqual(HttpStatus.BAD_REQUEST);
+      }
     });
 
     it('should skip days with empty startDate', async () => {

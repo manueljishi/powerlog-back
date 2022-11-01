@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Post,
+} from '@nestjs/common';
 import { NewExerciseDto } from './dto/new_exercise.dto';
 import { TrainerDataService } from './trainer_data.service';
 
@@ -7,9 +15,6 @@ export class TrainerDataController {
   constructor(private readonly trainerDataService: TrainerDataService) {}
   @Post()
   async createNewExercise(@Body() newExercise: NewExerciseDto) {
-    if (!newExercise.athleteName || !newExercise.exerciseName) {
-      return 'Missing required fields';
-    }
     return this.trainerDataService.createNewExercise(
       newExercise.athleteName,
       newExercise.exerciseName,

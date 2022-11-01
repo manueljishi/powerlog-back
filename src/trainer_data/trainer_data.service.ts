@@ -14,7 +14,6 @@ export class TrainerDataService {
   ) {}
 
   async createNewExercise(athleteName: string, exerciseName: string) {
-    console.log(athleteName, exerciseName);
     return await this.exerciseListModel.updateOne(
       { athleteName },
       { $push: { exercise_list: { exercise: exerciseName } } },
