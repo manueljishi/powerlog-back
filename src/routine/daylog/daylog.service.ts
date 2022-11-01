@@ -10,8 +10,16 @@ export class DaylogService {
     @InjectModel(DayLog.name) private dayLogModel: Model<DayLogDocument>,
   ) {}
   async insertMany(dayLogs: DayLogClass[]) {
-    const intserted = await this.dayLogModel.insertMany(dayLogs);
-    return intserted.length;
+    let inserted = dayLogs.map(async (dayLog) => {
+      return this.dayLogModel.updateOne(
+        { day: dayLog.day, athleteName: dayLog.athleteName },
+        dayLog,
+        { upsert: true },
+      );
+    });
+    return Promise.all(inserted).then((values) => {
+      return values.length;
+    });
   }
 
   async findByDate(date: Date, athleteName: string): Promise<DayLogClass> {
