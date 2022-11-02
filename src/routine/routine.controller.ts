@@ -49,6 +49,15 @@ export class RoutineController {
 
   @Put()
   async updateDay(@Body() dayLog: DayLogDto) {
-    return await this.dayLogService.updateDay(dayLog);
+    return this.dayLogService.updateDay(dayLog).then((value) => {
+      if (value === 0) {
+        throw new HttpException(
+          'No day found for this date',
+          HttpStatus.NOT_FOUND,
+        );
+      } else {
+        return 'Day updated successfully';
+      }
+    });
   }
 }

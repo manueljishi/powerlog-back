@@ -27,9 +27,10 @@ export class DaylogService {
   }
 
   async updateDay(dayLog: DayLogClass) {
-    return await this.dayLogModel.updateOne(
-      { day: dayLog.day, athleteName: dayLog.athleteName },
-      dayLog,
-    );
+    return this.dayLogModel
+      .updateOne({ day: dayLog.day, athleteName: dayLog.athleteName }, dayLog)
+      .then((value) => {
+        return value.modifiedCount;
+      });
   }
 }

@@ -1,10 +1,4 @@
-import {
-  IsArray,
-  IsDate,
-  IsDateString,
-  IsNumber,
-  IsString,
-} from 'class-validator';
+import { IsArray, IsDateString, IsNumber, IsString } from 'class-validator';
 
 export class IConstraint {
   @IsString()
