@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DayLog, DayLogDocument } from '../schemas/daylog.schema';
-import { DayLog as DayLogClass } from '../dto/create.routine.dto';
+import { DayLogDto as DayLogClass } from '../dto/create.routine.dto';
 
 @Injectable()
 export class DaylogService {
@@ -24,5 +24,12 @@ export class DaylogService {
 
   async findByDate(date: Date, athleteName: string): Promise<DayLogClass> {
     return await this.dayLogModel.findOne({ day: date, athleteName });
+  }
+
+  async updateDay(dayLog: DayLogClass) {
+    return await this.dayLogModel.updateOne(
+      { day: dayLog.day, athleteName: dayLog.athleteName },
+      dayLog,
+    );
   }
 }

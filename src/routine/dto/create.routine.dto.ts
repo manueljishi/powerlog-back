@@ -23,12 +23,12 @@ export class CreateRoutineDto {
   @IsDateString()
   endDate: Date;
   @IsArray()
-  dayLogs: DayLog[];
+  dayLogs: DayLogDto[];
   @IsString()
   athleteName: string;
 }
 
-export class DayLog {
+export class DayLogDto {
   @IsDateString()
   day: Date;
   @IsArray()

@@ -4,9 +4,10 @@ import {
   HttpException,
   HttpStatus,
   Post,
+  Put,
 } from '@nestjs/common';
 import { DaylogService } from './daylog/daylog.service';
-import { CreateRoutineDto } from './dto/create.routine.dto';
+import { CreateRoutineDto, DayLogDto } from './dto/create.routine.dto';
 import { GetDayDto } from './dto/get.day.dto';
 
 @Controller('routine')
@@ -44,5 +45,10 @@ export class RoutineController {
     } else {
       return resp;
     }
+  }
+
+  @Put()
+  async updateDay(@Body() dayLog: DayLogDto) {
+    return await this.dayLogService.updateDay(dayLog);
   }
 }
