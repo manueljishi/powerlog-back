@@ -23,6 +23,12 @@ export class DayLog {
 
   @Prop({ required: true })
   athleteName: string;
+
+  @Prop({ required: false })
+  isBlockStart: boolean;
+
+  @Prop({ required: false })
+  isBlockEnd: boolean;
 }
 
 export const DayLogSchema = SchemaFactory.createForClass(DayLog);
