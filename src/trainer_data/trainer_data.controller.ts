@@ -16,13 +16,13 @@ export class TrainerDataController {
   @Post()
   async createNewExercise(@Body() newExercise: NewExerciseDto) {
     return this.trainerDataService.createNewExercise(
-      newExercise.athleteName,
+      newExercise.trainerId,
       newExercise.exerciseName,
     );
   }
 
-  @Get(':athleteName')
-  async getExerciseList(@Param('athleteName') athleteName: string) {
-    return this.trainerDataService.getExerciseList(athleteName);
+  @Get(':trainerId')
+  async getExerciseList(@Param('trainerId') trainerId: string) {
+    return this.trainerDataService.getExerciseList(trainerId);
   }
 }

@@ -2,7 +2,7 @@ import { IsString } from 'class-validator';
 
 export class NewExerciseDto {
   @IsString()
-  athleteName: string;
+  trainerId: string;
   @IsString()
   exerciseName: string;
 }

@@ -1,8 +1,10 @@
 import { IsDateString, IsString } from 'class-validator';
 
-export class GetDayDto {
+export class GetDayRangeDto {
   @IsDateString()
-  date: Date;
+  startDate: Date;
+  @IsDateString()
+  endDate: Date;
   @IsString()
   athleteUid: string;
 }

@@ -37,8 +37,6 @@ export class CreateRoutineDto {
   @ValidateNested({ each: true })
   @Type(() => DayLogDto)
   dayLogs: DayLogDto[];
-  @IsString()
-  athleteName: string;
 }
 
 export class DayLogDto {
@@ -50,7 +48,7 @@ export class DayLogDto {
   exercises: Exercise[];
 
   @IsString()
-  athleteName: string;
+  athleteUid: string;
 
   @IsOptional()
   @IsBoolean()

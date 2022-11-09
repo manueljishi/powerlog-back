@@ -22,7 +22,7 @@ export class DayLog {
   exercises: Exercise[];
 
   @Prop({ required: true })
-  athleteName: string;
+  athleteUid: string;
 
   @Prop({ required: false })
   isBlockStart: boolean;
