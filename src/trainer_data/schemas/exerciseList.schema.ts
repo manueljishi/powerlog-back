@@ -7,9 +7,9 @@ export type ExerciseListDocument = ExerciseList & Document;
 @Schema()
 export class ExerciseList {
   @Prop({ required: true })
-  athleteName: string;
+  trainerId: string;
   @Prop({ required: true })
-  exercise_list: ExerciseName[];
+  exerciseList: ExerciseName[];
 }
 
 export const ExerciseListSchema = SchemaFactory.createForClass(ExerciseList);

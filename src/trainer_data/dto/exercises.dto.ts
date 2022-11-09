@@ -7,7 +7,7 @@ export class ExerciseName {
 
 export class ExerciseListDto {
   @IsString()
-  athleteName: string;
+  trainerId: string;
   @IsArray()
   exerciseList: ExerciseName[];
 }

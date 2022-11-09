@@ -12,7 +12,7 @@ export class DaylogService {
   async insertMany(dayLogs: DayLogClass[]) {
     let inserted = dayLogs.map(async (dayLog) => {
       return this.dayLogModel.updateOne(
-        { day: dayLog.day, athleteName: dayLog.athleteName },
+        { day: dayLog.day, athleteUid: dayLog.athleteUid },
         dayLog,
         { upsert: true },
       );
@@ -22,13 +22,24 @@ export class DaylogService {
     });
   }
 
-  async findByDate(date: Date, athleteName: string): Promise<DayLogClass> {
-    return await this.dayLogModel.findOne({ day: date, athleteName });
+  async findByDate(date: Date, athleteUid: string): Promise<DayLogClass> {
+    return await this.dayLogModel.findOne({ day: date, athleteUid });
+  }
+
+  async findByDateRange(
+    startDate: Date,
+    endDate: Date,
+    athleteUid: string,
+  ): Promise<DayLogClass[]> {
+    return await this.dayLogModel.find({
+      day: { $gte: startDate, $lte: endDate },
+      athleteUid,
+    });
   }
 
   async updateDay(dayLog: DayLogClass) {
     return this.dayLogModel
-      .updateOne({ day: dayLog.day, athleteName: dayLog.athleteName }, dayLog)
+      .updateOne({ day: dayLog.day, athleteUid: dayLog.athleteUid }, dayLog)
       .then((value) => {
         return value.modifiedCount;
       });

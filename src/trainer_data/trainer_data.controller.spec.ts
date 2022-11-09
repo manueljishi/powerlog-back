@@ -1,6 +1,6 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ExerciseList } from './schemas/exercise_list.schema';
+import { ExerciseList } from './schemas/exerciseList.schema';
 import { TrainerDataController } from './trainer_data.controller';
 import { TrainerDataService } from './trainer_data.service';
 

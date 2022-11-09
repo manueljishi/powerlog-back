@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import {
   ExerciseList,
   ExerciseListDocument,
-} from './schemas/exercise_list.schema';
+} from './schemas/exerciseList.schema';
 
 @Injectable()
 export class TrainerDataService {
@@ -13,15 +13,15 @@ export class TrainerDataService {
     private exerciseListModel: Model<ExerciseListDocument>,
   ) {}
 
-  async createNewExercise(athleteName: string, exerciseName: string) {
+  async createNewExercise(trainerId: string, exerciseName: string) {
     return await this.exerciseListModel.updateOne(
-      { athleteName },
-      { $push: { exercise_list: { exercise: exerciseName } } },
+      { trainerId },
+      { $push: { exerciseList: { exercise: exerciseName } } },
       { upsert: true },
     );
   }
 
-  async getExerciseList(athleteName: string) {
-    return await this.exerciseListModel.find({ athleteName });
+  async getExerciseList(trainerId: string) {
+    return await this.exerciseListModel.find({ trainerId });
   }
 }

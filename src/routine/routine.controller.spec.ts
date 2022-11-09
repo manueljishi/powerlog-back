@@ -13,17 +13,18 @@ describe('RoutineController', () => {
   let testRoutine: CreateRoutineDto = {
     startDate: new Date('2021-01-01'),
     endDate: new Date('2021-01-07'),
-    athleteName: 'test',
     dayLogs: [
       {
         day: new Date('2021-01-01'),
-        athleteName: 'test',
+        athleteUid: 'test',
+        isBlockStart: true,
+        isBlockEnd: false,
         exercises: [
           {
             exercise_name: 'test',
             sets: 3,
             reps: [1, 2, 3],
-            constraints: [{ rpe: '8' }, { rpe: '8' }, { rpe: '8' }],
+            constraints: [{ rpe: 8 }, { rpe: 8 }, { rpe: 8 }],
             real_perceived_effort: [],
             real_weight: [],
             comments: 'test',
@@ -92,9 +93,9 @@ describe('RoutineController', () => {
       }
     });
 
-    it('should skip days with empty athleteName', async () => {
+    it('should skip days with empty athleteUid', async () => {
       let testRoutine2 = { ...testRoutine };
-      testRoutine2.dayLogs[0].athleteName = null;
+      testRoutine2.dayLogs[0].athleteUid = null;
       try {
         await controller.createWeek(testRoutine2);
       } catch (e) {
@@ -123,7 +124,7 @@ describe('RoutineController', () => {
       });
       let dataParams = {
         date: testRoutine.dayLogs[0].day,
-        athleteName: testRoutine.dayLogs[0].athleteName,
+        athleteUid: testRoutine.dayLogs[0].athleteUid,
       };
       expect(await controller.findByDate(dataParams)).toEqual(
         testRoutine.dayLogs[0],
@@ -136,7 +137,7 @@ describe('RoutineController', () => {
       });
       let dataParams = {
         date: new Date('2021-01-04'),
-        athleteName: testRoutine.dayLogs[0].athleteName,
+        athleteUid: testRoutine.dayLogs[0].athleteUid,
       };
       try {
         await controller.findByDate(dataParams);

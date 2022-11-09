@@ -5,7 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import {
   ExerciseListSchema,
   ExerciseList,
-} from './schemas/exercise_list.schema';
+} from './schemas/exerciseList.schema';
 
 @Module({
   imports: [
