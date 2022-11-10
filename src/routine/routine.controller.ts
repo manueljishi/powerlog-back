@@ -17,7 +17,7 @@ export class RoutineController {
 
   @Post()
   async createWeek(@Body() newRoutine: CreateRoutineDto) {
-    if (newRoutine.startDate >= newRoutine.endDate) {
+    if (newRoutine.startDate > newRoutine.endDate) {
       throw new HttpException(
         'Start date must be before end date',
         HttpStatus.BAD_REQUEST,

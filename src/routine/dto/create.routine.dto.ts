@@ -75,12 +75,10 @@ class Exercise {
   @Type(() => IConstraint)
   constraints: IConstraint[];
 
-  @IsOptional()
   @Type(() => Number)
   @IsNumber({}, { each: true })
   real_perceived_effort: number[];
 
-  @IsOptional()
   @Type(() => Number)
   @IsNumber({}, { each: true })
   real_weight: number[];
