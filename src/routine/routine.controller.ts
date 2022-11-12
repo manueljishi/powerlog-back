@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  HttpCode,
   HttpException,
   HttpStatus,
   Post,
@@ -17,22 +18,21 @@ export class RoutineController {
 
   @Post()
   async createWeek(@Body() newRoutine: CreateRoutineDto) {
-    if (newRoutine.startDate > newRoutine.endDate) {
-      throw new HttpException(
-        'Start date must be before end date',
-        HttpStatus.BAD_REQUEST,
-      );
-    }
     const nonEmptyDayLogs = newRoutine.dayLogs.filter(
       (dayLog) => dayLog.exercises.length > 0,
     );
     if (nonEmptyDayLogs.length === 0) {
       throw new HttpException('No days to create', HttpStatus.BAD_REQUEST);
     }
-    return await this.dayLogService.insertMany(nonEmptyDayLogs);
+    try {
+      return await this.dayLogService.insertMany(nonEmptyDayLogs);
+    } catch (err) {
+      throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   @Post('/date')
+  @HttpCode(HttpStatus.OK)
   async findByDate(@Body() date: GetDayDto) {
     let resp = await this.dayLogService.findByDate(date.date, date.athleteUid);
     if (!resp) {
@@ -46,6 +46,7 @@ export class RoutineController {
   }
 
   @Post('/results')
+  @HttpCode(HttpStatus.OK)
   async findByDateRange(@Body() dateRange: GetDayRangeDto) {
     let resp = await this.dayLogService.findByDateRange(
       dateRange.startDate,

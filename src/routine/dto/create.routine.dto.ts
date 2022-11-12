@@ -30,10 +30,6 @@ export class IConstraint {
 }
 
 export class CreateRoutineDto {
-  @IsDateString()
-  startDate: Date;
-  @IsDateString()
-  endDate: Date;
   @ValidateNested({ each: true })
   @Type(() => DayLogDto)
   dayLogs: DayLogDto[];
