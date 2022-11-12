@@ -10,6 +10,7 @@ import { DaylogService } from './daylog/daylog.service';
 import { CreateRoutineDto, DayLogDto } from './dto/create.routine.dto';
 import { GetDayDto } from './dto/get.day.dto';
 import { GetDayRangeDto } from './dto/get.day.range.dto';
+import { UpdateUserInputDto } from './dto/update.user.input.dto';
 
 @Controller('routine')
 export class RoutineController {
@@ -65,7 +66,7 @@ export class RoutineController {
   @Put()
   async updateDay(@Body() dayLog: DayLogDto) {
     return this.dayLogService.updateDay(dayLog).then((value) => {
-      if (value === 0) {
+      if (value.modifiedCount === 0) {
         throw new HttpException(
           'No day found for this date',
           HttpStatus.NOT_FOUND,
@@ -73,6 +74,14 @@ export class RoutineController {
       } else {
         return 'Day updated successfully';
       }
+    });
+  }
+
+  @Put('/userinput')
+  async updateUserInput(@Body() inputData: UpdateUserInputDto) {
+    console.log(inputData);
+    return this.dayLogService.updateUserInput(inputData).then((value) => {
+      console.log(value);
     });
   }
 }

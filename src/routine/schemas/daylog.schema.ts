@@ -5,11 +5,11 @@ export type DayLogDocument = DayLog & Document;
 
 class Exercise {
   exercise_name: string;
-  sets: [number];
-  reps: [number];
+  sets: number[];
+  reps: number[];
   constraints: IConstraint[];
-  real_perceived_effort: [number];
-  real_weight: [number];
+  real_perceived_effort: number[];
+  real_weight: number[];
   comments: string;
 }
 
