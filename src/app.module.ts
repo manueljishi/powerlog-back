@@ -5,17 +5,16 @@ import { RoutineModule } from './routine/routine.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { TrainerDataModule } from './trainer_data/trainer_data.module';
-
+console.log('process.env.MONGO_URI', process.env.MONGODB_URI);
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
+      expandVariables: true,
     }),
     RoutineModule,
-    MongooseModule.forRoot(
-      `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASS}@mongotest.w3q4g.mongodb.net/?retryWrites=true&w=majority`,
-    ),
+    MongooseModule.forRoot(process.env.MONGODB_URI),
     TrainerDataModule,
   ],
   controllers: [AppController],
