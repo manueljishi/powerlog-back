@@ -17,6 +17,7 @@ export class RoutineController {
   constructor(private dayLogService: DaylogService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   async createWeek(@Body() newRoutine: CreateRoutineDto) {
     const nonEmptyDayLogs = newRoutine.dayLogs.filter(
       (dayLog) => dayLog.exercises.length > 0,
@@ -64,6 +65,7 @@ export class RoutineController {
   }
 
   @Put()
+  @HttpCode(HttpStatus.OK)
   async updateDay(@Body() dayLog: DayLogDto) {
     return this.dayLogService.updateDay(dayLog).then((value) => {
       if (value.modifiedCount === 0) {
