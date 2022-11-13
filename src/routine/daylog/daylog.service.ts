@@ -31,7 +31,6 @@ export class DaylogService {
     endDate: Date,
     athleteUid: string,
   ): Promise<DayLogClass[]> {
-    console.log(startDate, endDate);
     return await this.dayLogModel.find({
       day: { $gte: startDate, $lte: endDate },
       athleteUid,
