@@ -12,21 +12,21 @@ import {
 
 export class IConstraint {
   @IsOptional()
-  @IsNumber()
-  @Transform(({ value }) => Number(value))
-  rpe?: number;
+  @IsString()
+  @Transform(({ value }) => String(value))
+  rpe?: string;
   @IsOptional()
-  @IsNumber()
-  @Transform(({ value }) => Number(value))
-  rir?: number;
+  @IsString()
+  @Transform(({ value }) => String(value))
+  rir?: string;
   @IsOptional()
-  @IsNumber()
-  @Transform(({ value }) => Number(value))
-  fixedWeight?: number;
+  @IsString()
+  @Transform(({ value }) => String(value))
+  fixedWeight?: string;
   @IsOptional()
-  @IsNumber()
-  @Transform(({ value }) => Number(value))
-  percentage?: number;
+  @IsString()
+  @Transform(({ value }) => String(value))
+  percentage?: string;
 }
 
 export class CreateRoutineDto {
