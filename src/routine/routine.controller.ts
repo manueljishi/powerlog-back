@@ -9,7 +9,6 @@ import {
 } from '@nestjs/common';
 import { DaylogService } from './daylog/daylog.service';
 import { CreateRoutineDto, DayLogDto } from './dto/create.routine.dto';
-import { DayLogResponseDto } from './dto/daylog.response.dto';
 import { GetDayDto } from './dto/get.day.dto';
 import { GetDayRangeDto } from './dto/get.day.range.dto';
 
@@ -43,9 +42,7 @@ export class RoutineController {
         HttpStatus.NOT_FOUND,
       );
     } else {
-      let data = new DayLogResponseDto(resp);
-      data.parseExercises();
-      return data;
+      return resp;
     }
   }
 
