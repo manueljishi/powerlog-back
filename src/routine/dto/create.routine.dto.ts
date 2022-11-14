@@ -54,7 +54,7 @@ export class DayLogDto {
   isBlockEnd: boolean;
 }
 
-class Exercise {
+export class Exercise {
   @IsString()
   exercise_name: string;
 
