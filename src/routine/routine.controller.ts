@@ -1,11 +1,13 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpException,
   HttpStatus,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { DaylogService } from './daylog/daylog.service';
 import { CreateRoutineDto, DayLogDto } from './dto/create.routine.dto';
@@ -15,6 +17,11 @@ import { GetDayRangeDto } from './dto/get.day.range.dto';
 @Controller('routine')
 export class RoutineController {
   constructor(private dayLogService: DaylogService) {}
+
+  @Get('/charts')
+  generateCharts(@Query() query) {
+    return { query };
+  }
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
