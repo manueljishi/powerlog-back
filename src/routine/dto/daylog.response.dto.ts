@@ -24,7 +24,11 @@ export class DayLogResponseDto extends DayLogDto {
       let newConstraint: IConstraint = {};
       const keys = Object.keys(constraint);
       keys.forEach((key) => {
-        newConstraint[key] = constraint[key].toString();
+        if (constraint[key] == 0) {
+          newConstraint[key] = '';
+        } else {
+          newConstraint[key] = constraint[key].toString();
+        }
       });
       parsedConstraints.push(newConstraint);
     });
