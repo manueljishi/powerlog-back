@@ -62,9 +62,9 @@ class Exercise {
   @Transform(({ value }) => Number(value))
   sets: number;
 
-  @Type(() => Number)
-  @IsNumber({}, { each: true })
-  reps: number[];
+  @Type(() => String)
+  @IsString({ each: true })
+  reps: string[];
 
   @ValidateNested({ each: true })
   @Type(() => IConstraint)
