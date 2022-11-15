@@ -27,7 +27,7 @@ export class RoutineController {
   Estimar el peso maximo que se puede tirar
   Definir el bloque al que pertenece cada ejercicio
   */
-  @Put('charts')
+  @Get('charts')
   async generateCharts(@Query() query) {
     let resp: ChartsDataDto = {
       athleteUid: query.athlete,
