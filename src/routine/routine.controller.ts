@@ -10,17 +10,34 @@ import {
   Query,
 } from '@nestjs/common';
 import { DaylogService } from './daylog/daylog.service';
+import { ChartsDataDto } from './dto/charts-data.dto';
 import { CreateRoutineDto, DayLogDto } from './dto/create.routine.dto';
 import { GetDayDto } from './dto/get.day.dto';
 import { GetDayRangeDto } from './dto/get.day.range.dto';
+import { initializeChartsData } from './functions/charts';
 
 @Controller('routine')
 export class RoutineController {
   constructor(private dayLogService: DaylogService) {}
 
-  @Get('/charts')
-  generateCharts(@Query() query) {
-    return { query };
+  /*
+  Coger los dias de inicio y fin,
+  Coger los ejericios con ese nombre
+  Sortear los dias por fecha y ver cual ha sido el peso maximo que se ha tirado, con
+  */
+  @Put('charts')
+  async generateCharts(@Query() query) {
+    let resp: ChartsDataDto = {
+      athleteUid: query.athlete,
+      exercise_name: query.exercise,
+      data: [],
+    };
+    const values = await this.dayLogService.generateCharts(
+      query.exercise,
+      query.athlete,
+    );
+    resp.data = initializeChartsData(values[0]);
+    return resp;
   }
 
   @Post()

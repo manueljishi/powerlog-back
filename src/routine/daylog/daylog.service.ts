@@ -44,4 +44,42 @@ export class DaylogService {
         return value;
       });
   }
+
+  async generateCharts(exercise: string, athleteUid: string) {
+    return Promise.all([
+      this.getAllExercises(exercise, athleteUid),
+      this.getAllStartingDates(athleteUid),
+      this.getAllEndingDates(athleteUid),
+    ]).then((values) => {
+      return values;
+    });
+  }
+
+  async getAllExercises(exercise: string, athleteUid: string) {
+    return await this.dayLogModel.find(
+      {
+        athleteUid,
+        exercises: { $elemMatch: { exercise_name: exercise } },
+      },
+      {
+        _id: 0,
+        exercises: { $elemMatch: { exercise_name: exercise } },
+        day: 1,
+      },
+    );
+  }
+
+  async getAllStartingDates(athleteUid: string) {
+    return await this.dayLogModel.find(
+      { athleteUid, isBlockStart: true },
+      { day: 1, _id: 0 },
+    );
+  }
+
+  async getAllEndingDates(athleteUid: string) {
+    return await this.dayLogModel.find(
+      { athleteUid, isBlockEnd: true },
+      { day: 1, _id: 0 },
+    );
+  }
 }
