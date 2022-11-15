@@ -14,7 +14,7 @@ import { ChartsDataDto } from './dto/charts-data.dto';
 import { CreateRoutineDto, DayLogDto } from './dto/create.routine.dto';
 import { GetDayDto } from './dto/get.day.dto';
 import { GetDayRangeDto } from './dto/get.day.range.dto';
-import { initializeChartsData } from './functions/charts';
+import { createCharts } from './functions/charts';
 
 @Controller('routine')
 export class RoutineController {
@@ -23,7 +23,9 @@ export class RoutineController {
   /*
   Coger los dias de inicio y fin,
   Coger los ejericios con ese nombre
-  Sortear los dias por fecha y ver cual ha sido el peso maximo que se ha tirado, con
+  Sortear los dias por fecha y ver cual ha sido el peso maximo que se ha tirado y la constraint
+  Estimar el peso maximo que se puede tirar
+  Definir el bloque al que pertenece cada ejercicio
   */
   @Put('charts')
   async generateCharts(@Query() query) {
@@ -36,7 +38,7 @@ export class RoutineController {
       query.exercise,
       query.athlete,
     );
-    resp.data = initializeChartsData(values[0]);
+    resp.data = createCharts(values[0], values[1]);
     return resp;
   }
 

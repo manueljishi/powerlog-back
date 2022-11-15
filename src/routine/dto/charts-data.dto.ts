@@ -10,6 +10,7 @@ export class ChartsDataInfo {
   day?: Date;
   block?: number;
   real_weight?: number;
+  reps?: number;
   constraint?: IConstraint;
   estimated_weight?: number;
 }

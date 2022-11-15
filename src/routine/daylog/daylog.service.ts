@@ -48,7 +48,6 @@ export class DaylogService {
   async generateCharts(exercise: string, athleteUid: string) {
     return Promise.all([
       this.getAllExercises(exercise, athleteUid),
-      this.getAllStartingDates(athleteUid),
       this.getAllEndingDates(athleteUid),
     ]).then((values) => {
       return values;
@@ -66,6 +65,7 @@ export class DaylogService {
         exercises: { $elemMatch: { exercise_name: exercise } },
         day: 1,
       },
+      { sort: { day: 1 } },
     );
   }
 
@@ -76,10 +76,11 @@ export class DaylogService {
     );
   }
 
-  async getAllEndingDates(athleteUid: string) {
+  async getAllEndingDates(athleteUid: string): Promise<Date[]> {
     return await this.dayLogModel.find(
       { athleteUid, isBlockEnd: true },
       { day: 1, _id: 0 },
+      { sort: { day: 1 } },
     );
   }
 }
