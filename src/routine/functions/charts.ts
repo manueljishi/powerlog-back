@@ -52,6 +52,7 @@ function get1Rm(weight: number, reps: number, constraint: IConstraint) {
   } else {
     constraintValue = 10 - roundHalf(Number(constraint['rir']));
   }
+
   return +(weight / rmCalc[constraintValue.toString()][reps - 1]).toFixed(2);
 }
 
