@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { DayLog, DayLogDocument } from '../schemas/daylog.schema';
-import { DayLogDto as DayLogClass } from '../dto/create.routine.dto';
+import { DayLog, DayLogDocument } from './schemas/daylog.schema';
+import { DayLogDto as DayLogClass } from './dto/create.routine.dto';
 
 @Injectable()
-export class DaylogService {
+export class RoutineService {
   constructor(
     @InjectModel(DayLog.name) private dayLogModel: Model<DayLogDocument>,
   ) {}
-  async insertMany(dayLogs: DayLogClass[]) {
+  async insertMany(dayLogs: DayLogClass[]): Promise<number> {
     let inserted = dayLogs.map(async (dayLog) => {
       return this.dayLogModel.updateOne(
         { day: dayLog.day, athleteUid: dayLog.athleteUid },
