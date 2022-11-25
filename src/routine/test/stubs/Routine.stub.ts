@@ -306,6 +306,41 @@ export const routineStub = (): CreateRoutineDto => ({
   ],
 });
 
+export const singleRoutineStub = (): CreateRoutineDto => ({
+  dayLogs: [
+    {
+      athleteUid: 'P9fFcJBDGRYFB9NFHqrVFIxfraE2',
+      day: new Date('2022-10-01T00:00:00.000Z'),
+      exercises: [
+        {
+          exercise_name: 'Comp Sq',
+          sets: 2,
+          reps: ['8', '8'],
+          constraints: [
+            {
+              rpe: '8',
+              rir: '',
+              fixedWeight: '',
+              percentage: '',
+            },
+            {
+              rpe: '8',
+              rir: '',
+              fixedWeight: '',
+              percentage: '',
+            },
+          ],
+          real_perceived_effort: [2, 1],
+          real_weight: [180, 120],
+          comments: 'eoooo',
+        },
+      ],
+      isBlockEnd: false,
+      isBlockStart: true,
+    },
+  ],
+});
+
 export const getOneDayLogWithCustomReps = (reps: string[]): any => {
   return {
     athleteUid: 'P9fFcJBDGRYFB9NFHqrVFIxfraE2',

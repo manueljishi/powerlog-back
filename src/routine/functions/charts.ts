@@ -34,7 +34,6 @@ export function estimateMaxWeight(data: ChartsDataInfo[]): ChartsDataInfo[] {
     //falta mirar si las reps son AMRAP o tienen letras
     let maxWeight = day.real_weight;
     let constraint = day.constraint;
-    console.log(constraint);
     let reps = day.reps;
     if (constraint['fixedWeight'] != '' || constraint['percentage'] != '') {
       day.estimated_weight = day.real_weight;

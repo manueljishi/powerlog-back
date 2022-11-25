@@ -20,13 +20,6 @@ import { createCharts } from './functions/charts';
 export class RoutineController {
   constructor(private routineService: RoutineService) {}
 
-  /*
-  Coger los dias de inicio y fin,
-  Coger los ejericios con ese nombre
-  Sortear los dias por fecha y ver cual ha sido el peso maximo que se ha tirado y la constraint
-  Estimar el peso maximo que se puede tirar
-  Definir el bloque al que pertenece cada ejercicio
-  */
   @Get('charts')
   async generateCharts(@Query() query) {
     let resp: ChartsDataDto = {
@@ -49,11 +42,30 @@ export class RoutineController {
       (dayLog) => dayLog.exercises.length > 0,
     );
     if (nonEmptyDayLogs.length === 0) {
-      console.log(nonEmptyDayLogs);
       throw new HttpException('No days to create', HttpStatus.BAD_REQUEST);
     }
     try {
-      return await this.routineService.insertMany(nonEmptyDayLogs);
+      nonEmptyDayLogs.forEach((dayLog) => {
+        dayLog.exercises.forEach((exercise) => {
+          //check that all values arrays are the same length as sets
+          if (
+            exercise.sets !== exercise.constraints.length ||
+            exercise.sets !== exercise.real_weight.length ||
+            exercise.sets !== exercise.reps.length ||
+            exercise.sets !== exercise.real_perceived_effort.length
+          ) {
+            throw new HttpException('Invalid exercise', HttpStatus.BAD_REQUEST);
+          }
+          exercise.real_weight = exercise.real_weight.fill(0);
+          exercise.real_perceived_effort =
+            exercise.real_perceived_effort.fill(0);
+        });
+      });
+
+      let resp = await this.routineService.insertMany(nonEmptyDayLogs);
+      if (resp > 0) {
+        return { message: 'Created', data: resp };
+      }
     } catch (err) {
       throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
