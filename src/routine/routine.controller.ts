@@ -38,35 +38,23 @@ export class RoutineController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
-  async createWeek(@Body() newRoutine: CreateRoutineDto) {
-    const nonEmptyDayLogs = newRoutine.dayLogs.filter(
-      (dayLog) => dayLog.exercises.length > 0,
-    );
-    if (nonEmptyDayLogs.length === 0) {
-      throw new HttpException('No days to create', HttpStatus.BAD_REQUEST);
-    }
+  async createWeek(@Body() newDay: DayLogDto) {
     try {
-      nonEmptyDayLogs.forEach((dayLog) => {
-        dayLog.exercises.forEach((exercise) => {
-          //check that all values arrays are the same length as sets
-          if (
-            exercise.sets !== exercise.constraints.length ||
-            exercise.sets !== exercise.real_weight.length ||
-            exercise.sets !== exercise.reps.length ||
-            exercise.sets !== exercise.real_perceived_effort.length
-          ) {
-            throw new HttpException('Invalid exercise', HttpStatus.BAD_REQUEST);
-          }
-          exercise.real_weight = exercise.real_weight.fill(0);
-          exercise.real_perceived_effort =
-            exercise.real_perceived_effort.fill(0);
-        });
+      newDay.exercises.forEach((exercise) => {
+        //check that all values arrays are the same length as sets
+        if (
+          exercise.sets !== exercise.constraints.length ||
+          exercise.sets !== exercise.real_weight.length ||
+          exercise.sets !== exercise.reps.length ||
+          exercise.sets !== exercise.real_perceived_effort.length
+        ) {
+          throw new HttpException('Invalid exercise', HttpStatus.BAD_REQUEST);
+        }
+        exercise.real_weight = exercise.real_weight.fill(0);
+        exercise.real_perceived_effort = exercise.real_perceived_effort.fill(0);
       });
-
-      let resp = await this.routineService.insertMany(nonEmptyDayLogs);
-      if (resp > 0) {
-        return { message: 'Created', data: resp };
-      }
+      let resp = await this.routineService.createDay(newDay);
+      return resp;
     } catch (err) {
       throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -106,16 +94,16 @@ export class RoutineController {
 
   @Put()
   @HttpCode(HttpStatus.OK)
-  async updateDay(@Body() dayLog: UpdateDayLogDto) {
+  async updateDay(@Body() dayLog: DayLogDto) {
     return this.routineService.updateDay(dayLog).then((value) => {
-      // if (value.modifiedCount === 0) {
-      //   throw new HttpException(
-      //     'No day found for this date',
-      //     HttpStatus.NOT_FOUND,
-      //   );
-      // } else {
-      //   return 'Day updated successfully';
-      // }
+      if (value.modifiedCount === 0) {
+        throw new HttpException(
+          'No day found for this date',
+          HttpStatus.NOT_FOUND,
+        );
+      } else {
+        return 'Day updated successfully';
+      }
     });
   }
 }

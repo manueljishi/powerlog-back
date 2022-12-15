@@ -10,17 +10,13 @@ export class RoutineService {
   constructor(
     @InjectModel(DayLog.name) private dayLogModel: Model<DayLogDocument>,
   ) {}
-  async insertMany(dayLogs: DayLogClass[]): Promise<number> {
-    let inserted = dayLogs.map(async (dayLog) => {
-      return this.dayLogModel.updateOne(
-        { day: dayLog.day, athleteUid: dayLog.athleteUid },
-        dayLog,
-        { upsert: true },
-      );
-    });
-    return Promise.all(inserted).then((values) => {
-      return values.length;
-    });
+
+  async createDay(dayLog: DayLogClass) {
+    return await this.dayLogModel.findOneAndUpdate(
+      { day: dayLog.day, athleteUid: dayLog.athleteUid },
+      dayLog,
+      { upsert: true },
+    );
   }
 
   async findByDate(date: Date, athleteUid: string): Promise<DayLogClass> {
@@ -38,11 +34,10 @@ export class RoutineService {
     });
   }
 
-  async updateDay(dayLog: UpdateDayLogDto) {
+  async updateDay(dayLog: DayLogClass) {
     return this.dayLogModel
-      .findByIdAndUpdate(dayLog._id, dayLog)
+      .updateOne({ day: dayLog.day, athleteUid: dayLog.athleteUid }, dayLog)
       .then((value) => {
-        console.log(value);
         return value;
       });
   }
