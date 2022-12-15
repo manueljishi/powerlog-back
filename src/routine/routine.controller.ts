@@ -15,6 +15,7 @@ import { CreateRoutineDto, DayLogDto } from './dto/create.routine.dto';
 import { GetDayDto } from './dto/get.day.dto';
 import { GetDayRangeDto } from './dto/get.day.range.dto';
 import { createCharts } from './functions/charts';
+import { UpdateDayLogDto } from './dto/update.routine.dto';
 
 @Controller('routine')
 export class RoutineController {
@@ -105,16 +106,16 @@ export class RoutineController {
 
   @Put()
   @HttpCode(HttpStatus.OK)
-  async updateDay(@Body() dayLog: DayLogDto) {
+  async updateDay(@Body() dayLog: UpdateDayLogDto) {
     return this.routineService.updateDay(dayLog).then((value) => {
-      if (value.modifiedCount === 0) {
-        throw new HttpException(
-          'No day found for this date',
-          HttpStatus.NOT_FOUND,
-        );
-      } else {
-        return 'Day updated successfully';
-      }
+      // if (value.modifiedCount === 0) {
+      //   throw new HttpException(
+      //     'No day found for this date',
+      //     HttpStatus.NOT_FOUND,
+      //   );
+      // } else {
+      //   return 'Day updated successfully';
+      // }
     });
   }
 }

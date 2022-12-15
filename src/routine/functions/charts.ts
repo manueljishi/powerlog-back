@@ -1,6 +1,6 @@
 import e from 'express';
+import { IConstraint } from 'src/classes/classes.general';
 import { ChartsDataDto, ChartsDataInfo } from '../dto/charts-data.dto';
-import { IConstraint } from '../dto/create.routine.dto';
 import { rmCalc } from './rmCalc';
 
 export function createCharts(data: any, endingDays: Date[]) {

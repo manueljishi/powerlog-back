@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { DayLog, DayLogDocument } from './schemas/daylog.schema';
 import { DayLogDto as DayLogClass } from './dto/create.routine.dto';
+import { UpdateDayLogDto } from './dto/update.routine.dto';
 
 @Injectable()
 export class RoutineService {
@@ -37,10 +38,11 @@ export class RoutineService {
     });
   }
 
-  async updateDay(dayLog: DayLogClass) {
+  async updateDay(dayLog: UpdateDayLogDto) {
     return this.dayLogModel
-      .updateOne({ day: dayLog.day, athleteUid: dayLog.athleteUid }, dayLog)
+      .findByIdAndUpdate(dayLog._id, dayLog)
       .then((value) => {
+        console.log(value);
         return value;
       });
   }

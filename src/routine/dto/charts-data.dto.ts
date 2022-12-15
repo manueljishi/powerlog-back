@@ -1,4 +1,4 @@
-import { IConstraint } from './create.routine.dto';
+import { IConstraint } from 'src/classes/classes.general';
 
 export class ChartsDataDto {
   athleteUid: string;
