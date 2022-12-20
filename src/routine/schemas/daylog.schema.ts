@@ -1,5 +1,5 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IConstraint } from '../dto/create.routine.dto';
+import { IConstraint } from 'src/classes/classes.general';
 
 export type DayLogDocument = DayLog & Document;
 

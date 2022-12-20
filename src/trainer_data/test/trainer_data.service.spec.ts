@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { DaylogService } from './daylog.service';
+import { TrainerDataService } from '../trainer_data.service';
 
-describe.skip('DaylogService', () => {
-  let service: DaylogService;
+describe.skip('TrainerDataService', () => {
+  let service: TrainerDataService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [DaylogService],
+      providers: [TrainerDataService],
     }).compile();
 
-    service = module.get<DaylogService>(DaylogService);
+    service = module.get<TrainerDataService>(TrainerDataService);
   });
 
   it('should be defined', () => {

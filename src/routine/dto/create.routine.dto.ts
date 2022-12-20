@@ -1,6 +1,5 @@
-import { Transform, Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 import {
-  IsArray,
   IsBoolean,
   IsDateString,
   IsNumber,
@@ -8,25 +7,7 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-
-export class IConstraint {
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => String(value))
-  rpe?: string;
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => String(value))
-  rir?: string;
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => String(value))
-  fixedWeight?: string;
-  @IsOptional()
-  @IsString()
-  @Transform(({ value }) => String(value))
-  percentage?: string;
-}
+import { Exercise } from 'src/classes/classes.general';
 
 export class CreateRoutineDto {
   @ValidateNested({ each: true })
@@ -52,32 +33,4 @@ export class DayLogDto {
   @IsOptional()
   @IsBoolean()
   isBlockEnd: boolean;
-}
-
-class Exercise {
-  @IsString()
-  exercise_name: string;
-
-  @IsNumber()
-  @Transform(({ value }) => Number(value))
-  sets: number;
-
-  @Type(() => String)
-  @IsString({ each: true })
-  reps: string[];
-
-  @ValidateNested({ each: true })
-  @Type(() => IConstraint)
-  constraints: IConstraint[];
-
-  @Type(() => Number)
-  @IsNumber({}, { each: true })
-  real_perceived_effort: number[];
-
-  @Type(() => Number)
-  @IsNumber({}, { each: true })
-  real_weight: number[];
-
-  @IsString()
-  comments: string;
 }

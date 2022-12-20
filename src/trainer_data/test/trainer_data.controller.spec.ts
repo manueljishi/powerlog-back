@@ -1,8 +1,8 @@
 import { getModelToken } from '@nestjs/mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
-import { ExerciseList } from './schemas/exerciseList.schema';
-import { TrainerDataController } from './trainer_data.controller';
-import { TrainerDataService } from './trainer_data.service';
+import { ExerciseList } from '../schemas/exerciseList.schema';
+import { TrainerDataController } from '../trainer_data.controller';
+import { TrainerDataService } from '../trainer_data.service';
 
 describe('TrainerDataController', () => {
   let controller: TrainerDataController;
@@ -31,7 +31,7 @@ describe('TrainerDataController', () => {
   it('should throw if missing create params', async () => {
     try {
       await controller.createNewExercise({
-        athleteName: 'test',
+        trainerId: 'test',
         exerciseName: '',
       });
     } catch (e) {
