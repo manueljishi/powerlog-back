@@ -1,6 +1,7 @@
 import { Transform, Type } from 'class-transformer';
 import {
   IsNumber,
+  IsNumberString,
   IsOptional,
   IsString,
   ValidateNested,

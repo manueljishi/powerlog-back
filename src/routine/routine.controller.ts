@@ -8,14 +8,14 @@ import {
   Post,
   Put,
   Query,
+  UsePipes,
 } from '@nestjs/common';
 import { RoutineService } from './routine.service';
 import { ChartsDataDto } from './dto/charts-data.dto';
-import { CreateRoutineDto, DayLogDto } from './dto/create.routine.dto';
+import { DayLogDto } from './dto/create.routine.dto';
 import { GetDayDto } from './dto/get.day.dto';
-import { GetDayRangeDto } from './dto/get.day.range.dto';
 import { createCharts } from './functions/charts';
-import { UpdateDayLogDto } from './dto/update.routine.dto';
+import { ParseCommaPipe } from 'src/pipes/ParseComma.pipe';
 
 @Controller('routine')
 export class RoutineController {
@@ -74,24 +74,7 @@ export class RoutineController {
     }
   }
 
-  @Post('/results')
-  @HttpCode(HttpStatus.OK)
-  async findByDateRange(@Body() dateRange: GetDayRangeDto) {
-    let resp = await this.routineService.findByDateRange(
-      dateRange.startDate,
-      dateRange.endDate,
-      dateRange.athleteUid,
-    );
-    if (!resp) {
-      throw new HttpException(
-        'No days found for this date range',
-        HttpStatus.NOT_FOUND,
-      );
-    } else {
-      return resp;
-    }
-  }
-
+  //ruta que se usa para actualizar los datos de un dia a traves del movil
   @Put()
   @HttpCode(HttpStatus.OK)
   async updateDay(@Body() dayLog: DayLogDto) {
