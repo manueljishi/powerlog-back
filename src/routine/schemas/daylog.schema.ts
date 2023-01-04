@@ -1,5 +1,5 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IConstraint } from 'src/classes/classes.general';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { IConstraint } from "src/classes/classes.general";
 
 export type DayLogDocument = DayLog & Document;
 
@@ -29,6 +29,12 @@ export class DayLog {
 
   @Prop({ required: false })
   isBlockEnd: boolean;
+
+  @Prop({ required: false })
+  athleteComments: string;
+
+  @Prop({ required: false })
+  athleteFeelings: number;
 }
 
 export const DayLogSchema = SchemaFactory.createForClass(DayLog);

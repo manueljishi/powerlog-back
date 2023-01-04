@@ -5,6 +5,7 @@ import { RoutineModule } from './routine/routine.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config';
 import { TrainerDataModule } from './trainer_data/trainer_data.module';
+import { FilesModule } from './files/files.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -15,6 +16,7 @@ import { TrainerDataModule } from './trainer_data/trainer_data.module';
     RoutineModule,
     MongooseModule.forRoot(process.env.MONGODB_URI),
     TrainerDataModule,
+    FilesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

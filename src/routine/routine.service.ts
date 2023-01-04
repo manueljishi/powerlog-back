@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { DayLog, DayLogDocument } from './schemas/daylog.schema';
-import { DayLogDto as DayLogClass } from './dto/create.routine.dto';
-import { UpdateDayLogDto } from './dto/update.routine.dto';
+import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/mongoose";
+import { Model } from "mongoose";
+import { DayLog, DayLogDocument } from "./schemas/daylog.schema";
+import { DayLogDto as DayLogClass } from "./dto/create.routine.dto";
+import { SummaryDto } from "./dto/summary.dto";
 
 @Injectable()
 export class RoutineService {
@@ -37,6 +37,25 @@ export class RoutineService {
   async updateDay(dayLog: DayLogClass) {
     return this.dayLogModel
       .updateOne({ day: dayLog.day, athleteUid: dayLog.athleteUid }, dayLog)
+      .then((value) => {
+        return value;
+      });
+  }
+
+  async updateSummary(summary: SummaryDto) {
+    return this.dayLogModel
+      .updateOne(
+        {
+          day: summary.day,
+          athleteUid: summary.athleteUid,
+        },
+        {
+          $set: {
+            athleteComments: summary.athleteComments,
+            athleteFeelings: summary.athleteFeelings,
+          },
+        },
+      )
       .then((value) => {
         return value;
       });
