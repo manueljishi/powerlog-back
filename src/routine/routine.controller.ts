@@ -96,7 +96,7 @@ export class RoutineController {
   @HttpCode(HttpStatus.OK)
   async updateSummary(@Body() summaryDto: SummaryDto) {
     return this.routineService.updateSummary(summaryDto).then((value) => {
-      if (value.modifiedCount === 0) {
+      if (value.matchedCount === 0) {
         throw new HttpException(
           "No day found for this date",
           HttpStatus.NOT_FOUND,
