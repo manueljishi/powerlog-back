@@ -1,4 +1,4 @@
-import { IConstraint } from 'src/classes/classes.general';
+import { IConstraint } from "src/classes/classes.general";
 
 export class ChartsDataDto {
   athleteUid: string;

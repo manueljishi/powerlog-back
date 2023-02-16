@@ -8,22 +8,21 @@ import {
   Post,
   Put,
   Query,
-} from '@nestjs/common';
-import { RoutineService } from './routine.service';
-import { ChartsDataDto } from './dto/charts-data.dto';
-import { CreateRoutineDto, DayLogDto } from './dto/create.routine.dto';
-import { GetDayDto } from './dto/get.day.dto';
-import { GetDayRangeDto } from './dto/get.day.range.dto';
-import { createCharts } from './functions/charts';
-import { UpdateDayLogDto } from './dto/update.routine.dto';
+} from "@nestjs/common";
+import { RoutineService } from "./routine.service";
+import { ChartsDataDto } from "./dto/charts-data.dto";
+import { DayLogDto } from "./dto/create.routine.dto";
+import { GetDayDto } from "./dto/get.day.dto";
+import { createCharts } from "./functions/charts";
+import { SummaryDto } from "./dto/summary.dto";
 
-@Controller('routine')
+@Controller("routine")
 export class RoutineController {
   constructor(private routineService: RoutineService) {}
 
-  @Get('charts')
+  @Get("charts")
   async generateCharts(@Query() query) {
-    let resp: ChartsDataDto = {
+    const resp: ChartsDataDto = {
       athleteUid: query.athlete,
       exercise_name: query.exercise,
       data: [],
@@ -48,43 +47,28 @@ export class RoutineController {
           exercise.sets !== exercise.reps.length ||
           exercise.sets !== exercise.real_perceived_effort.length
         ) {
-          throw new HttpException('Invalid exercise', HttpStatus.BAD_REQUEST);
+          throw new HttpException("Invalid exercise", HttpStatus.BAD_REQUEST);
         }
         exercise.real_weight = exercise.real_weight.fill(0);
         exercise.real_perceived_effort = exercise.real_perceived_effort.fill(0);
       });
-      let resp = await this.routineService.createDay(newDay);
+      const resp = await this.routineService.createDay(newDay);
       return resp;
     } catch (err) {
       throw new HttpException(err.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  @Post('/date')
+  @Post("/date")
   @HttpCode(HttpStatus.OK)
   async findByDate(@Body() date: GetDayDto) {
-    let resp = await this.routineService.findByDate(date.date, date.athleteUid);
-    if (!resp) {
-      throw new HttpException(
-        'No day found for this date',
-        HttpStatus.NOT_FOUND,
-      );
-    } else {
-      return resp;
-    }
-  }
-
-  @Post('/results')
-  @HttpCode(HttpStatus.OK)
-  async findByDateRange(@Body() dateRange: GetDayRangeDto) {
-    let resp = await this.routineService.findByDateRange(
-      dateRange.startDate,
-      dateRange.endDate,
-      dateRange.athleteUid,
+    const resp = await this.routineService.findByDate(
+      date.date,
+      date.athleteUid,
     );
     if (!resp) {
       throw new HttpException(
-        'No days found for this date range',
+        "No day found for this date",
         HttpStatus.NOT_FOUND,
       );
     } else {
@@ -92,17 +76,33 @@ export class RoutineController {
     }
   }
 
+  //ruta que se usa para actualizar los datos de un dia a traves del movil
   @Put()
   @HttpCode(HttpStatus.OK)
   async updateDay(@Body() dayLog: DayLogDto) {
     return this.routineService.updateDay(dayLog).then((value) => {
       if (value.modifiedCount === 0) {
         throw new HttpException(
-          'No day found for this date',
+          "No day found for this date",
           HttpStatus.NOT_FOUND,
         );
       } else {
-        return 'Day updated successfully';
+        return "Day updated successfully";
+      }
+    });
+  }
+
+  @Put("/summary")
+  @HttpCode(HttpStatus.OK)
+  async updateSummary(@Body() summaryDto: SummaryDto) {
+    return this.routineService.updateSummary(summaryDto).then((value) => {
+      if (value.matchedCount === 0) {
+        throw new HttpException(
+          "No day found for this date",
+          HttpStatus.NOT_FOUND,
+        );
+      } else {
+        return "Day updated successfully";
       }
     });
   }

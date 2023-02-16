@@ -1,13 +1,12 @@
-import { Type } from 'class-transformer';
+import { Type } from "class-transformer";
 import {
   IsBoolean,
   IsDateString,
-  IsNumber,
   IsOptional,
   IsString,
   ValidateNested,
-} from 'class-validator';
-import { Exercise } from 'src/classes/classes.general';
+} from "class-validator";
+import { Exercise } from "src/classes/classes.general";
 
 export class CreateRoutineDto {
   @ValidateNested({ each: true })

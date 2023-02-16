@@ -1,8 +1,8 @@
-import { Module } from '@nestjs/common';
-import { RoutineController } from './routine.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { DayLog, DayLogSchema } from './schemas/daylog.schema';
-import { RoutineService } from './routine.service';
+import { Module } from "@nestjs/common";
+import { RoutineController } from "./routine.controller";
+import { MongooseModule } from "@nestjs/mongoose";
+import { DayLog, DayLogSchema } from "./schemas/daylog.schema";
+import { RoutineService } from "./routine.service";
 
 @Module({
   imports: [
