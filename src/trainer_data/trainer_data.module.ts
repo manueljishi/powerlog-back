@@ -4,14 +4,14 @@ import { TrainerDataController } from './trainer_data.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import {
   ExerciseListSchema,
-  ExercisesSchema 
+  ExerciseList,
 } from './domain/schemas/exerciseList.schema';
 import { CreateExerciseController } from './presentation';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: ExercisesSchema.name, schema: ExerciseListSchema },
+      { name: ExerciseList.name, schema: ExerciseListSchema },
     ]),
   ],
   controllers: [TrainerDataController, CreateExerciseController],
