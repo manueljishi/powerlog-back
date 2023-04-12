@@ -1,9 +1,5 @@
 import { IsArray, IsString } from 'class-validator';
-
-export class ExerciseName {
-  @IsArray()
-  exerciseList: { exercise; '' }[];
-}
+import { ExerciseName } from '../classes/exerciseName.class';
 
 export class ExerciseListDto {
   @IsString()

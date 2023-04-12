@@ -76,7 +76,6 @@ export class RoutineController {
     }
   }
 
-  //ruta que se usa para actualizar los datos de un dia a traves del movil
   @Put()
   @HttpCode(HttpStatus.OK)
   async updateDay(@Body() dayLog: DayLogDto) {

@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import {
-  ExerciseList,
+  ExercisesSchema,
   ExerciseListDocument,
-} from './schemas/exerciseList.schema';
+} from '../domain/schemas/exerciseList.schema';
 
 @Injectable()
 export class TrainerDataService {
   constructor(
-    @InjectModel(ExerciseList.name)
+    @InjectModel(ExercisesSchema.name)
     private exerciseListModel: Model<ExerciseListDocument>,
   ) {}
 

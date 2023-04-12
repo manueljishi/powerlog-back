@@ -7,19 +7,12 @@ import {
   Param,
   Post,
 } from '@nestjs/common';
-import { NewExerciseDto } from './dto/new_exercise.dto';
-import { TrainerDataService } from './trainer_data.service';
+import { NewExerciseDto } from './domain/dto/new_exercise.dto';
+import { TrainerDataService } from './infrastructure/trainer_data.service';
 
 @Controller('trainer-data')
 export class TrainerDataController {
   constructor(private readonly trainerDataService: TrainerDataService) {}
-  @Post()
-  async createNewExercise(@Body() newExercise: NewExerciseDto) {
-    return this.trainerDataService.createNewExercise(
-      newExercise.trainerId,
-      newExercise.exerciseName,
-    );
-  }
 
   @Get(':trainerId')
   async getExerciseList(@Param('trainerId') trainerId: string) {

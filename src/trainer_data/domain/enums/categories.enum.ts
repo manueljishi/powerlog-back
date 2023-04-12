@@ -1,0 +1,11 @@
+export enum ExerciseCategories {
+    SQUAT= "SQUAT",
+    BP = "BENCH PRESS",
+    DEADLIFT = "DEADLIFT",
+    KNEE_DOMINANT = "KNEE DOMINANT",
+    HIP_DOMINANT = "HIP DOMINANT",
+    PUSH = "PUSH",
+    PULL = "PULL",
+    COMPLEMENTARY = "COMLPEMENTARY",
+    NON_SPECIFIED = "NON_SPECIFIED"
+}
