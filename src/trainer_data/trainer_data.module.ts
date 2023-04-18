@@ -11,7 +11,7 @@ import { CreateExerciseController } from './presentation';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      { name: ExerciseList.name, schema: ExerciseListSchema },
+      { name: "exerciselists", schema: ExerciseListSchema },
     ]),
   ],
   controllers: [TrainerDataController, CreateExerciseController],
