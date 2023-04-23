@@ -16,8 +16,9 @@ import {
     @Post()
     async createNewExercise(@Body() newExercise: NewExerciseDto) {
       return this.trainerDataService.createNewExercise(
-        newExercise.trainerId,
-        newExercise.exerciseName,
+      newExercise.trainerId,
+      newExercise.exerciseCategory,
+      newExercise.exerciseName
       );
     }
   }

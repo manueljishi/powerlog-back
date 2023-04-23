@@ -5,6 +5,7 @@ import {
   ExerciseList,
   ExerciseListDocument,
 } from '../domain/schemas/exerciseList.schema';
+import { NewExerciseDto } from '../domain/dto/new_exercise.dto';
 
 @Injectable()
 export class TrainerDataService {
@@ -13,10 +14,10 @@ export class TrainerDataService {
     private exerciseListModel: Model<ExerciseListDocument>,
   ) {}
 
-  async createNewExercise(trainerId: string, exerciseName: string) {
+  async createNewExercise(trainerId: string, exerciseCat: string, exerciseName: string) {
     return await this.exerciseListModel.updateOne(
       { trainerId },
-      { $push: { exerciseList: { exercise: exerciseName } } },
+      { $push: { [exerciseCat]: exerciseName } },
       { upsert: true },
     );
   }
