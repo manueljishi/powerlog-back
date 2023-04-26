@@ -12,7 +12,7 @@ export class TrainerDataService {
   constructor(
     @InjectModel(ExerciseList.name)
     private exerciseListModel: Model<ExerciseListDocument>,
-  ) {}
+  ) { }
 
   async createNewExercise(trainerId: string, exerciseCat: string, exerciseName: string) {
     return await this.exerciseListModel.updateOne(
@@ -24,5 +24,12 @@ export class TrainerDataService {
 
   async getExerciseList(trainerId: string) {
     return await this.exerciseListModel.find({ trainerId });
+  }
+
+  async updateExercise(trainerId: string, oldCategory: string, newCategory: string, oldName: string, newName: string) {
+    return await this.exerciseListModel.updateOne(
+      { trainerId },
+      { $pull: { [oldCategory]: oldName }, $addToSet: { [newCategory]: newName } }
+    )
   }
 }

@@ -6,7 +6,7 @@ import {
   ExerciseListSchema,
   ExerciseList,
 } from './domain/schemas/exerciseList.schema';
-import { CreateExerciseController } from './presentation';
+import { CreateExerciseController, UpdateExerciseController } from './presentation';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { CreateExerciseController } from './presentation';
       { name: ExerciseList.name, schema: ExerciseListSchema },
     ]),
   ],
-  controllers: [TrainerDataController, CreateExerciseController],
+  controllers: [TrainerDataController, CreateExerciseController, UpdateExerciseController],
   providers: [TrainerDataService],
 })
-export class TrainerDataModule {}
+export class TrainerDataModule { }
